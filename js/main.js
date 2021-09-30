@@ -1,3 +1,4 @@
+//Функция, возвращающая целое число из диапазона
 const chooseNumber = (min, max) => {
   if (min < 0 || max < 0) {
     return;
@@ -6,3 +7,8 @@ const chooseNumber = (min, max) => {
 };
 
 chooseNumber();
+
+//Функция, проверяющая длину строки относительно максимально возможной
+const checkLength = (checkedString, MAX_LENGTH) => checkedString.length <= MAX_LENGTH;
+
+checkLength();
