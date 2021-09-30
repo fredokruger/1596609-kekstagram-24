@@ -1,12 +1,8 @@
 const chooseNumber = (min, max) => {
   if (min < 0 || max < 0) {
     return;
-  } else if (min > max) {
-    const savedMin = min;
-    min = max;
-    max = savedMin;
   }
-  return Math.floor(Math.random() * (max + 1 - min) + min);
+  return Math.floor(Math.random() * (Math.max(min, max) + 1 - Math.min(min, max)) + Math.min(min, max));
 };
 
-chooseNumber(10, 200);
+chooseNumber();
