@@ -55,11 +55,12 @@ const createDescription = () => {
     // eslint-disable-next-line prefer-template
     description: 'Описание фотографии ' + collectId(25)[photoOrder],
     likes: chooseNumber(15,200),
-    comments : Array.from({length: chooseNumber(1,6)}, createComment),
+    comments : Array.from({length: chooseNumber(1,11)}, createComment),
   };
   let commentOrder = 1;
   descriptionInfo.comments.forEach((value) => {
-    value.id = commentOrder;
+    // eslint-disable-next-line prefer-template
+    value.id =parseInt((descriptionInfo.id.toString(10) + '0' + commentOrder.toString(10)),10);
     commentOrder++;
   });
   photoOrder++;
