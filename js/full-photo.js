@@ -25,7 +25,7 @@ const openFullPhoto = (maxPhoto) => {
   fullPhotoCommentsCountBlock.classList.add('hidden');
   fullPhotoCommentsLoader.classList.add('hidden');
   body.classList.add('modal-open');
-  document.addEventListener('keydown', closeFullPhotoOnKey);
+  document.addEventListener('keydown', onDocumentKeydown);
 };
 
 //Функция создания комментария
@@ -41,14 +41,14 @@ const createComment = (comment) => {
 const closeFullPhoto = () => {
   fullPhotoTemplate.classList.add('hidden');
   body.classList.remove('modal-open');
-  document.removeEventListener('keydown', closeFullPhotoOnKey);
+  document.removeEventListener('keydown', onDocumentKeydown);
 };
 
 //Вызов функции закрытия большого фото при нажатии на крестик
 fullPhotoButtonClose.addEventListener('click', closeFullPhoto);
 
 //Функция закрытия большого фото при нажатии на клавишу
-function closeFullPhotoOnKey (evt) {
+function onDocumentKeydown (evt) {
   if (evt.key !== KEY_CODE) {
     return;
   }
