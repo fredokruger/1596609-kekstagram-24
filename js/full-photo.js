@@ -10,6 +10,7 @@ const fullPhotoDescription = fullPhotoTemplate.querySelector('.social__caption')
 const fullPhotoCommentsList = fullPhotoTemplate.querySelector('.social__comments');
 const fullPhotoCommentsItem = fullPhotoCommentsList.querySelector('.social__comment');
 const fullPhotoButtonClose = document.querySelector('.big-picture__cancel');
+const fullPhotoButtonOverlay = document.querySelector('.overlay');
 const KEY_CODE = 'Escape';
 
 fullPhotoCommentsList.innerHTML = '';
@@ -46,7 +47,7 @@ const closeFullPhoto = () => {
 //Вызов функции закрытия большого фото при нажатии на крестик
 fullPhotoButtonClose.addEventListener('click', closeFullPhoto);
 
-//Вызов функции закрытия большого фото при нажатии на клавишу
+//Функция закрытия большого фото при нажатии на клавишу
 function closeFullPhotoOnKey (evt) {
   if (evt.key !== KEY_CODE) {
     return;
@@ -54,7 +55,8 @@ function closeFullPhotoOnKey (evt) {
   closeFullPhoto();
 }
 
-document.querySelector('.overlay').addEventListener('click', (evt) => {
+//Функция закрытия большого фото при нажатии вне области попапа
+fullPhotoButtonOverlay.addEventListener('click', (evt) => {
   if (!evt.target.closest('.big-picture__preview')) {
     closeFullPhoto();
   }
