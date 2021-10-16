@@ -1,5 +1,5 @@
 import {photoDescriptions} from './descriptions-list.js';
-import {openFullPhoto, createComment} from './full-photo.js';
+import {openFullPhoto} from './full-photo.js';
 
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const pictureContainer = document.querySelector('.pictures');
@@ -16,8 +16,6 @@ const createGallery = (item) => {
     evt.preventDefault();
     //вызов функции открытия большого фото
     openFullPhoto(item);
-    //вызов функции создания комментариев на каждом фото
-    item.comments.forEach(createComment);
   });
 };
 
