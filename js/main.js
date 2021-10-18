@@ -1,2 +1,1 @@
-import './descriptions-list.js';
-import './miniature.js';
+import './miniature-photo.js';
