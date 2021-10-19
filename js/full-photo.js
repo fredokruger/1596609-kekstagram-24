@@ -14,7 +14,7 @@ const fullPhotoButtonOverlay = document.querySelector('.overlay');
 const KEY_CODE = 'Escape';
 
 
-//Функция наполнения комментария данными
+//Функция наполнения комментария к большому фото данными
 const fillComment = (comment) => {
   const fullPhotoCommentClone = fullPhotoCommentsItem.cloneNode(true);
   fullPhotoCommentClone.querySelector('.social__picture').src = comment.avatar;
@@ -54,6 +54,7 @@ function onDocumentKeydown (evt) {
   if (evt.key !== KEY_CODE) {
     return;
   }
+  evt.preventDefault();
   closeFullPhoto();
 }
 
