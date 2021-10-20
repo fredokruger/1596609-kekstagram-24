@@ -3,11 +3,9 @@ import {openFullPhoto} from './full-photo.js';
 
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const picturesContainer = document.querySelector('.pictures');
-// Живая коллекция миниатюр
-const miniPictures =  document.getElementsByClassName('picture__img');
-// console.log(miniPictures);
-
-//Функция создания миниатюры и подвешивание события на каждую
+//Регулярное выражение для поиска айди в картинке
+const re = /\/photos\/(\d+)\.jpg/;
+//Функция создания миниатюры
 const createGallery = (item) => {
   const copyPictureTemplate = pictureTemplate.cloneNode(true);
   copyPictureTemplate.querySelector('.picture__img').src = item.url;
@@ -20,11 +18,10 @@ const createGallery = (item) => {
 picturesContainer.addEventListener('click', (evt) => {
   if (evt.target.closest('.picture')) {
     evt.preventDefault();
-    const miniPicturesArray = [...miniPictures];
     //вызов функции открытия большого фото с аргументом в виде элемента из исходного массива
-    openFullPhoto(photoDescriptions[miniPicturesArray.indexOf(evt.target)]);
+    //с помощью регулярного выражения вытаскивается айди текущей картинки и вставляется индексом в исходный массив с вычетом единицы
+    openFullPhoto(photoDescriptions[evt.target.closest('.picture').querySelector('.picture__img').src.match(re)[1]-1]);
   }
 });
-
 photoDescriptions.forEach(createGallery);
 
