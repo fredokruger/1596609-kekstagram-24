@@ -1,4 +1,5 @@
 import {ESCAPE_CODE, body} from './util.js';
+import {hashtagsInput, commentInput} from './form-validation.js';
 
 const photoUpload = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -15,8 +16,12 @@ const openEditingPhoto = (evt) => {
 const closeEditingPhoto = () => {
   imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
-  photoUpload.value = '';
   document.removeEventListener('keydown', onImgEditingKeydown);
+  photoUpload.value = '';
+  hashtagsInput.setCustomValidity('');
+  hashtagsInput.classList.remove('text__hashtags--invalid');
+  hashtagsInput.classList.remove('text__hashtags--valid');
+  commentInput.classList.remove('text__description--valid');
 };
 
 photoUpload.addEventListener('change', openEditingPhoto);
@@ -25,6 +30,9 @@ closeEditingButton.addEventListener('click', closeEditingPhoto);
 
 function onImgEditingKeydown (evt) {
   if (evt.key !== ESCAPE_CODE) {
+    return;
+    //Отменить закрытие попапа, если фокус на полях ввода
+  } else if (evt.target.closest('.img-upload__text')) {
     return;
   }
   evt.preventDefault();

@@ -46,7 +46,9 @@ const closeFullPhoto = () => {
 };
 
 //Вызов функции закрытия большого фото при нажатии на крестик
-fullPhotoButtonClose.addEventListener('click', closeFullPhoto);
+fullPhotoButtonClose.addEventListener('click', () => {
+  closeFullPhoto();
+});
 
 //Функция закрытия большого фото при нажатии на клавишу
 function onFullPhotoKeydown (evt) {

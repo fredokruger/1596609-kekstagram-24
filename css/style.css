@@ -706,10 +706,13 @@ main {
   font-weight: 400;
   color: #000000;
   outline: none;
-  border: 2px solid black;
+  border: 1px solid black;
   border-radius: 5px;
 }
 
+.text__description--valid {
+  border: 1px solid #0FA66C;
+}
 
 /**
  * Кнопка для отправки изображения
