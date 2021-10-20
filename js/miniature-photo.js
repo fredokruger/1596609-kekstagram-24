@@ -5,6 +5,7 @@ const pictureTemplate = document.querySelector('#picture').content.querySelector
 const picturesContainer = document.querySelector('.pictures');
 // Живая коллекция миниатюр
 const miniPictures =  document.getElementsByClassName('picture__img');
+// console.log(miniPictures);
 
 //Функция создания миниатюры и подвешивание события на каждую
 const createGallery = (item) => {

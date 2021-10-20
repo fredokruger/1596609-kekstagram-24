@@ -8,7 +8,7 @@ const fullPhotoCommentsCountBlock = fullPhotoTemplate.querySelector('.social__co
 const fullPhotoCommentsLoader = fullPhotoTemplate.querySelector('.comments-loader');
 const fullPhotoDescription = fullPhotoTemplate.querySelector('.social__caption');
 const fullPhotoCommentsList = fullPhotoTemplate.querySelector('.social__comments');
-const fullPhotoCommentsItem = fullPhotoCommentsList.querySelector('.social__comment');
+const fullPhotoCommentsItem = fullPhotoCommentsList.querySelector('#social__comment').content.querySelector('.social__comment');
 const fullPhotoButtonClose = document.querySelector('.big-picture__cancel');
 const fullPhotoButtonOverlay = document.querySelector('.overlay');
 
@@ -24,7 +24,6 @@ const fillComment = (comment) => {
 
 //Функция открытия большого фото
 const openFullPhoto = (item) => {
-  fullPhotoCommentsList.innerHTML = ''; //очистить созданные до этого комментарии
   fullPhotoTemplate.classList.remove('hidden');
   fullPhotoImg.src = item.url;
   fullPhotoLikesCount.textContent = item.likes;
@@ -40,6 +39,7 @@ const openFullPhoto = (item) => {
 
 //Функция закрытия большого фото
 const closeFullPhoto = () => {
+  fullPhotoCommentsList.innerHTML = ''; //очистить созданные до этого комментарии
   fullPhotoTemplate.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onFullPhotoKeydown);
