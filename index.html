@@ -117,6 +117,7 @@
                 <fieldset class="img-upload__text text">
                   <input class="text__hashtags" name="hashtags" placeholder="#ХэшТег">
                   <textarea class="text__description" name="description" placeholder="Ваш комментарий..." maxlength="140"></textarea>
+                  <span class="text__count"><span class="text__count-current">0</span>/<span class="text__count-max">140</span></span>
                 </fieldset>
 
                 <!-- Кнопка для отправки данных на сервер -->
@@ -150,7 +151,7 @@
           </div>
 
           <!-- Комментарии к изображению -->
-          <div class="social__comment-count">5 из <span class="comments-count">125</span> комментариев</div>
+          <div class="social__comment-count"><span class="comments-count-current">125</span> из <span class="comments-count">125</span> комментариев</div>
           <ul class="social__comments">
               <template id="social__comment">
               <li class="social__comment">

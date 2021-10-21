@@ -3,6 +3,9 @@ const commentInput = document.querySelector('.text__description');
 const HASHTAG_LENGTH = 20;
 const HASHTAGS_COUNT = 5;
 const lettersNumbersRegex = /^#[A-Za-zА-Яа-яЁё0-9]*$|(^$)/;
+const MAX_COMMENT_LENGTH = 140;
+const commentLengthCurrent = document.querySelector('.text__count-current');
+const commentLengthMax = document.querySelector('.text__count-max');
 
 //Функция проверки массива на повторяющиеся элементы
 const hasDuplicates = (array) => (new Set(array)).size !== array.length;
@@ -64,13 +67,20 @@ hashtagsInput.addEventListener('input', () => {
 });
 
 //Валидация поля комментария
-commentInput.addEventListener('change', () => {
+commentLengthMax.textContent = MAX_COMMENT_LENGTH;
+commentInput.addEventListener('input', () => {
+  commentLengthCurrent.textContent = commentInput.value.length;
   if (commentInput.value === '') {
     commentInput.classList.remove('text__description--valid');
   } else {
     commentInput.classList.add('text__description--valid');
   }
-  commentInput.value = commentInput.value.replace(/\s+/g, ' ').trim();
 });
 
-export {hashtagsInput, commentInput};
+//Отправка формы
+const onFormSubmit = () => {
+  commentInput.value = commentInput.value.replace(/\s+/g, ' ').trim();
+  hashtagsInput.value = hashtagsInput.value.replace(/\s+/g, ' ').trim();
+};
+
+export {hashtagsInput, commentInput, onFormSubmit};
