@@ -1,4 +1,6 @@
 import {ESCAPE_CODE, body} from './util.js';
+import {getScrollbarWidth} from './scrollbar-width.js';
+
 //Элементы попапа с большим фото
 const fullPhotoTemplate = document.querySelector('.big-picture');
 const fullPhotoImg = fullPhotoTemplate.querySelector('.big-picture__img img');
@@ -32,6 +34,7 @@ const openFullPhoto = (item) => {
   fullPhotoCommentsCountBlock.classList.add('hidden');
   fullPhotoCommentsLoader.classList.add('hidden');
   body.classList.add('modal-open');
+  body.style.marginRight = `${getScrollbarWidth()}px`;
   document.addEventListener('keydown', onFullPhotoKeydown);
   //вызов функции создания комментариев на каждом фото
   item.comments.forEach(fillComment);
@@ -42,6 +45,7 @@ const closeFullPhoto = () => {
   fullPhotoCommentsList.innerHTML = ''; //очистить созданные до этого комментарии
   fullPhotoTemplate.classList.add('hidden');
   body.classList.remove('modal-open');
+  body.style.marginRight = '';
   document.removeEventListener('keydown', onFullPhotoKeydown);
 };
 

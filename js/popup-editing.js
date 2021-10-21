@@ -1,5 +1,6 @@
 import {ESCAPE_CODE, body} from './util.js';
 import {hashtagsInput, commentInput} from './form-validation.js';
+import {getScrollbarWidth} from './scrollbar-width.js';
 
 const photoUpload = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -17,11 +18,13 @@ const closeEditingPhoto = () => {
   hashtagsInput.classList.remove('text__hashtags--invalid');
   hashtagsInput.classList.remove('text__hashtags--valid');
   commentInput.classList.remove('text__description--valid');
+  body.style.marginRight = '';
 };
 
 const openEditingPhoto = (evt) => {
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
+  body.style.marginRight = `${getScrollbarWidth()}px`;
   imgUploadPreview.src = URL.createObjectURL(evt.target.files[0]);
   document.addEventListener('keydown', onImgEditingKeydown);
   closeEditingButton.addEventListener('click', closeEditingPhoto);
