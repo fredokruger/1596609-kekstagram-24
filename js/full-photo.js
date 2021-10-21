@@ -1,59 +1,97 @@
-const body = document.body;
+import {ESCAPE_CODE, body} from './util.js';
+import {getScrollbarWidth} from './scrollbar-width.js';
+
 //Элементы попапа с большим фото
-const fullPhotoTemplate = document.querySelector('.big-picture');
-const fullPhotoImg = fullPhotoTemplate.querySelector('.big-picture__img img');
-const fullPhotoLikesCount = fullPhotoTemplate.querySelector('.likes-count');
-const fullPhotoCommentsCount = fullPhotoTemplate.querySelector('.comments-count');
-const fullPhotoCommentsCountBlock = fullPhotoTemplate.querySelector('.social__comment-count');
-const fullPhotoCommentsLoader = fullPhotoTemplate.querySelector('.comments-loader');
-const fullPhotoDescription = fullPhotoTemplate.querySelector('.social__caption');
-const fullPhotoCommentsList = fullPhotoTemplate.querySelector('.social__comments');
-const fullPhotoCommentsItem = fullPhotoCommentsList.querySelector('.social__comment');
+const fullPhotoContainer = document.querySelector('.big-picture');
+const fullPhotoImg = fullPhotoContainer.querySelector('.big-picture__img img');
+const fullPhotoLikesCount = fullPhotoContainer.querySelector('.likes-count');
+const fullPhotoCommentsCountAll = fullPhotoContainer.querySelector('.comments-count');
+const fullPhotoCommentsCountCurrent = fullPhotoContainer.querySelector('.comments-count-current');
+// const fullPhotoCommentsCountBlock = fullPhotoContainer.querySelector('.social__comment-count');
+const fullPhotoCommentsLoader = fullPhotoContainer.querySelector('.comments-loader');
+const fullPhotoDescription = fullPhotoContainer.querySelector('.social__caption');
+const fullPhotoCommentsList = fullPhotoContainer.querySelector('.social__comments');
+//Шаблон комментария
+const fullPhotoCommentsItemTemplate = fullPhotoCommentsList.querySelector('#social__comment').content.querySelector('.social__comment');
+//Все комментарии к фото
+const allFullPhotoComments = fullPhotoCommentsList.getElementsByClassName('social__comment');
+//Скрытые комментарии к фото
+const hiddenFullPhotoComments = fullPhotoCommentsList.getElementsByClassName('social__comment--hidden');
 const fullPhotoButtonClose = document.querySelector('.big-picture__cancel');
 const fullPhotoButtonOverlay = document.querySelector('.overlay');
-const KEY_CODE = 'Escape';
+//Количество показываемых комментариев
+const SHOWN_COMMENTS_COUNT = 5;
 
-
-//Функция наполнения комментария данными
+//Функция наполнения комментария к большому фото данными
 const fillComment = (comment) => {
-  const fullPhotoCommentClone = fullPhotoCommentsItem.cloneNode(true);
+  const fullPhotoCommentClone = fullPhotoCommentsItemTemplate.cloneNode(true);
   fullPhotoCommentClone.querySelector('.social__picture').src = comment.avatar;
   fullPhotoCommentClone.querySelector('.social__picture').alt = comment.name;
   fullPhotoCommentClone.querySelector('.social__text').textContent = comment.message;
+  if (allFullPhotoComments.length >= SHOWN_COMMENTS_COUNT ) {
+    fullPhotoCommentClone.classList.add('social__comment--hidden');
+  }
   fullPhotoCommentsList.append(fullPhotoCommentClone);
+};
+
+//Cчетчик показываемых комментариев
+let displayedCommentCount = SHOWN_COMMENTS_COUNT;
+const onLoaderCommentsClick = () => {
+  for (let i = displayedCommentCount; i < (displayedCommentCount + SHOWN_COMMENTS_COUNT); i++) {
+    if (allFullPhotoComments[i] !== undefined) {
+      allFullPhotoComments[i].classList.remove('social__comment--hidden');
+    }
+    if (allFullPhotoComments[i+1] === undefined) {
+      fullPhotoCommentsLoader.classList.add('hidden');
+    }
+    fullPhotoCommentsCountCurrent.textContent = allFullPhotoComments.length - hiddenFullPhotoComments.length;
+  }
+  displayedCommentCount += SHOWN_COMMENTS_COUNT;
 };
 
 //Функция открытия большого фото
 const openFullPhoto = (item) => {
-  fullPhotoCommentsList.innerHTML = ''; //очистить созданные до этого комментарии
-  fullPhotoTemplate.classList.remove('hidden');
+  fullPhotoContainer.classList.remove('hidden');
   fullPhotoImg.src = item.url;
   fullPhotoLikesCount.textContent = item.likes;
-  fullPhotoCommentsCount.textContent = item.comments.length;
+  fullPhotoCommentsCountAll.textContent = item.comments.length;
   fullPhotoDescription.textContent = item.description;
-  fullPhotoCommentsCountBlock.classList.add('hidden');
-  fullPhotoCommentsLoader.classList.add('hidden');
   body.classList.add('modal-open');
-  document.addEventListener('keydown', onDocumentKeydown);
-  //вызов функции создания комментариев на каждом фото
+  body.style.marginRight = `${getScrollbarWidth()}px`;
+  document.addEventListener('keydown', onFullPhotoKeydown);
+  //Вызов функции создания комментариев на каждом фото
   item.comments.forEach(fillComment);
+  fullPhotoCommentsCountCurrent.textContent = allFullPhotoComments.length - hiddenFullPhotoComments.length;
+  if (allFullPhotoComments.length > SHOWN_COMMENTS_COUNT) {
+    fullPhotoCommentsLoader.classList.remove('hidden');
+    fullPhotoCommentsLoader.addEventListener('click', onLoaderCommentsClick);
+  } else {
+    fullPhotoCommentsLoader.classList.add('hidden');
+  }
 };
 
 //Функция закрытия большого фото
 const closeFullPhoto = () => {
-  fullPhotoTemplate.classList.add('hidden');
+  fullPhotoCommentsList.innerHTML = ''; //очистить созданные до этого комментарии
+  fullPhotoContainer.classList.add('hidden');
   body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onDocumentKeydown);
+  body.style.marginRight = '';
+  document.removeEventListener('keydown', onFullPhotoKeydown);
+  fullPhotoCommentsLoader.removeEventListener('click', onLoaderCommentsClick);
+  displayedCommentCount = SHOWN_COMMENTS_COUNT;
 };
 
 //Вызов функции закрытия большого фото при нажатии на крестик
-fullPhotoButtonClose.addEventListener('click', closeFullPhoto);
+fullPhotoButtonClose.addEventListener('click', () => {
+  closeFullPhoto();
+});
 
 //Функция закрытия большого фото при нажатии на клавишу
-function onDocumentKeydown (evt) {
-  if (evt.key !== KEY_CODE) {
+function onFullPhotoKeydown (evt) {
+  if (evt.key !== ESCAPE_CODE) {
     return;
   }
+  evt.preventDefault();
   closeFullPhoto();
 }
 
@@ -64,6 +102,6 @@ fullPhotoButtonOverlay.addEventListener('click', (evt) => {
   }
 });
 
-export {openFullPhoto, fillComment};
+export {openFullPhoto};
 
 
