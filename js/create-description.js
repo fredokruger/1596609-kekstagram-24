@@ -2,8 +2,8 @@
 import {chooseNumber} from './random-number.js';
 import {createComment} from './create-comment.js';
 
-const MIN_COMMENT_LENGTH = 1;
-const MAX_COMMENT_LENGTH = 40;
+const MIN_COMMENT_LENGTH = 0;
+const MAX_COMMENT_LENGTH = 20;
 const MIN_LIKES_COUNT = 15;
 const MAX_LIKES_COUNT = 200;
 
