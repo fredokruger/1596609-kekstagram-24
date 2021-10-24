@@ -3,12 +3,12 @@ import {openFullPhoto} from './full-photo.js';
 
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const picturesContainer = document.querySelector('.pictures');
-//Регулярное выражение для поиска айди в картинке
-const photoIdRegex = /\/photos\/(\d+)\.jpg/;
+
 //Функция создания миниатюры
-const createGallery = (item) => {
+const createGallery = (item, index) => {
   const copyPictureTemplate = pictureTemplate.cloneNode(true);
   copyPictureTemplate.querySelector('.picture__img').src = item.url;
+  copyPictureTemplate.querySelector('.picture__img').dataset.indexNumber = index;
   copyPictureTemplate.querySelector('.picture__likes').textContent = item.likes;
   copyPictureTemplate.querySelector('.picture__comments').textContent = item.comments.length;
   picturesContainer.append(copyPictureTemplate);
@@ -18,9 +18,10 @@ const createGallery = (item) => {
 picturesContainer.addEventListener('click', (evt) => {
   if (evt.target.closest('.picture')) {
     evt.preventDefault();
-    //вызов функции открытия большого фото с аргументом в виде элемента из исходного массива
-    //с помощью регулярного выражения вытаскивается айди текущей картинки и вставляется индексом в исходный массив с вычетом единицы
-    openFullPhoto(photoDescriptions[(evt.target.closest('.picture').querySelector('.picture__img').src.match(photoIdRegex)[1])-1]);
+    //Дата атрибут текущей фотографии
+    const currenPhotoDataId = evt.target.closest('.picture').querySelector('.picture__img').dataset.indexNumber;
+    //вызов функции открытия большого фото с аргументами в виде элемента из исходного массива и индекса этого элемента
+    openFullPhoto(photoDescriptions[currenPhotoDataId], currenPhotoDataId);
   }
 });
 photoDescriptions.forEach(createGallery);
