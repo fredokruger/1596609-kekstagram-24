@@ -2,3 +2,4 @@ import './miniature-photo.js';
 import './popup-editing.js';
 import './form-validation.js';
 import './range-slider.js';
+import './filter-photo.js';

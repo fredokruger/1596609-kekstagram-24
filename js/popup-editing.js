@@ -8,6 +8,7 @@ const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const closeEditingButton = document.querySelector('#upload-cancel');
 const imgUploadPreview = document.querySelector('.img-upload__preview img');
 const buttonFormSubmit = document.querySelector('.img-upload__submit');
+const minPhoto = document.querySelectorAll('.effects__preview');
 
 const closeEditingPhoto = () => {
   imgUploadOverlay.classList.add('hidden');
@@ -21,6 +22,7 @@ const closeEditingPhoto = () => {
   photoUpload.value = '';
   hashtagsInput.value = '';
   commentInput.value = '';
+  imgUploadPreview.className = '';
   hashtagsInput.classList.remove('text__hashtags--invalid');
   hashtagsInput.classList.remove('text__hashtags--valid');
   commentInput.classList.remove('text__description--valid');
@@ -28,10 +30,12 @@ const closeEditingPhoto = () => {
 };
 
 const openEditingPhoto = (evt) => {
+  const userPhoto = URL.createObjectURL(evt.target.files[0]);
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   body.style.marginRight = `${getScrollbarWidth()}px`;
-  imgUploadPreview.src = URL.createObjectURL(evt.target.files[0]);
+  imgUploadPreview.src = userPhoto;
+  minPhoto.forEach((element) => {element.style.backgroundImage = `url(${userPhoto})`;});
   document.addEventListener('keydown', onImgEditingKeydown);
   closeEditingButton.addEventListener('click', closeEditingPhoto);
   buttonFormSubmit.addEventListener('change', onFormSubmit);

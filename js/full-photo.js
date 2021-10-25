@@ -12,6 +12,7 @@ const fullPhotoCommentsCountBlock = fullPhotoContainer.querySelector('.social__c
 const fullPhotoCommentsLoader = fullPhotoContainer.querySelector('.comments-loader');
 const fullPhotoDescription = fullPhotoContainer.querySelector('.social__caption');
 const fullPhotoCommentsList = fullPhotoContainer.querySelector('.social__comments');
+
 //Шаблон комментария
 const fullPhotoCommentsItemTemplate = fullPhotoCommentsList.querySelector('#social__comment').content.querySelector('.social__comment');
 //Живая коллекция фото
