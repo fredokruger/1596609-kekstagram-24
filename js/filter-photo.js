@@ -1,9 +1,8 @@
-import {imgUploadPreview} from './popup-editing.js';
+import {imgUploadPreview, effectLevel, effectLevelScale} from './popup-editing.js';
 
 const filterRadioButtons = document.querySelector('.effects__list');
 const rangeSlider = document.querySelector('.effect-level__slider');
-const effectLevel = document.querySelector('.effect-level__value');
-const effectLevelScale = document.querySelector('.effect-level');
+
 
 noUiSlider.create(rangeSlider, {
   range: {

@@ -69,6 +69,7 @@ const openFullPhoto = (item, index) => {
     fullPhotoCommentsLoader.addEventListener('click', onLoaderCommentsClick);
   } else if (item.comments.length === 0) {
     fullPhotoCommentsCountBlock.classList.add('hidden');
+    fullPhotoCommentsLoader.classList.add('hidden');
   } else {
     fullPhotoCommentsLoader.classList.add('hidden');
   }

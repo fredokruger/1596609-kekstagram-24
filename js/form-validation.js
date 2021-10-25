@@ -83,4 +83,4 @@ const onFormSubmit = () => {
   hashtagsInput.value = hashtagsInput.value.replace(/\s+/g, ' ').trim();
 };
 
-export {hashtagsInput, commentInput, onFormSubmit};
+export {hashtagsInput, commentInput, onFormSubmit, commentLengthCurrent};
