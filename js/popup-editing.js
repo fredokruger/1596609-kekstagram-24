@@ -9,6 +9,7 @@ const closeEditingButton = document.querySelector('#upload-cancel');
 const imgUploadPreview = document.querySelector('.img-upload__preview img');
 const buttonFormSubmit = document.querySelector('.img-upload__submit');
 const minPhoto = document.querySelectorAll('.effects__preview');
+const effectLevelScale = document.querySelector('.effect-level');
 
 const closeEditingPhoto = () => {
   imgUploadOverlay.classList.add('hidden');
@@ -23,6 +24,7 @@ const closeEditingPhoto = () => {
   hashtagsInput.value = '';
   commentInput.value = '';
   imgUploadPreview.className = '';
+  imgUploadPreview.style.filter = '';
   hashtagsInput.classList.remove('text__hashtags--invalid');
   hashtagsInput.classList.remove('text__hashtags--valid');
   commentInput.classList.remove('text__description--valid');
@@ -35,6 +37,7 @@ const openEditingPhoto = (evt) => {
   body.classList.add('modal-open');
   body.style.marginRight = `${getScrollbarWidth()}px`;
   imgUploadPreview.src = userPhoto;
+  effectLevelScale.style.display = 'none';
   minPhoto.forEach((element) => {element.style.backgroundImage = `url(${userPhoto})`;});
   document.addEventListener('keydown', onImgEditingKeydown);
   closeEditingButton.addEventListener('click', closeEditingPhoto);
