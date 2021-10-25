@@ -1,6 +1,7 @@
 import {ESCAPE_CODE, body} from './util.js';
 import {hashtagsInput, commentInput, onFormSubmit} from './form-validation.js';
 import {getScrollbarWidth} from './scrollbar-width.js';
+import {zoomInPhoto, zoomOutPhoto, scaleControlSmaller, scaleControlBigger, SCALE_DEFAULT} from './scale-photo.js';
 
 const photoUpload = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -14,6 +15,9 @@ const closeEditingPhoto = () => {
   document.removeEventListener('keydown', onImgEditingKeydown);
   closeEditingButton.removeEventListener('click', closeEditingPhoto);
   buttonFormSubmit.removeEventListener('change', onFormSubmit);
+  scaleControlSmaller.removeEventListener('click', zoomOutPhoto);
+  scaleControlBigger.removeEventListener('click', zoomInPhoto);
+  imgUploadPreview.style.transform = `scale(${SCALE_DEFAULT})`;
   photoUpload.value = '';
   hashtagsInput.value = '';
   commentInput.value = '';
@@ -31,6 +35,8 @@ const openEditingPhoto = (evt) => {
   document.addEventListener('keydown', onImgEditingKeydown);
   closeEditingButton.addEventListener('click', closeEditingPhoto);
   buttonFormSubmit.addEventListener('change', onFormSubmit);
+  scaleControlSmaller.addEventListener('click', zoomOutPhoto);
+  scaleControlBigger.addEventListener('click', zoomInPhoto);
 };
 
 photoUpload.addEventListener('change', openEditingPhoto);
@@ -44,3 +50,4 @@ function onImgEditingKeydown (evt) {
   closeEditingPhoto();
 }
 
+export {imgUploadPreview};
