@@ -2,8 +2,8 @@ const hashtagsInput = document.querySelector('.text__hashtags');
 const commentInput = document.querySelector('.text__description');
 const HASHTAG_LENGTH = 20;
 const HASHTAGS_COUNT = 5;
-const lettersNumbersRegex = /^#[A-Za-zА-Яа-яЁё0-9]*$|(^$)/;
 const MAX_COMMENT_LENGTH = 140;
+const lettersNumbersRegex = /^#[A-Za-zА-Яа-яЁё0-9]*$|(^$)/;
 const commentLengthCurrent = document.querySelector('.text__count-current');
 const commentLengthMax = document.querySelector('.text__count-max');
 

@@ -1,4 +1,3 @@
-import {photoDescriptions} from './descriptions-list.js';
 import {openFullPhoto} from './full-photo.js';
 
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -15,13 +14,16 @@ const createGallery = (item, index) => {
 };
 
 //Привязка события к миниатюрам при помощи делегирования
-picturesContainer.addEventListener('click', (evt) => {
-  if (evt.target.closest('.picture')) {
-    evt.preventDefault();
-    //Дата атрибут текущей фотографии
-    const currenPhotoDataId = evt.target.closest('.picture').querySelector('.picture__img').dataset.indexNumber;
-    //вызов функции открытия большого фото с аргументами в виде элемента из исходного массива и индекса этого элемента
-    openFullPhoto(photoDescriptions[currenPhotoDataId], currenPhotoDataId);
-  }
-});
-photoDescriptions.forEach(createGallery);
+const createMiniatureEvent = (array) => {
+  picturesContainer.addEventListener('click', (evt) => {
+    if (evt.target.closest('.picture')) {
+      evt.preventDefault();
+      //Дата атрибут текущей фотографии
+      const currentPhotoDataId = evt.target.closest('.picture').querySelector('.picture__img').dataset.indexNumber;
+      //вызов функции открытия большого фото с аргументами в виде элемента из исходного массива и индекса этого элемента
+      openFullPhoto(array[currentPhotoDataId], currentPhotoDataId);
+    }
+  });
+};
+
+export {createGallery, createMiniatureEvent};
