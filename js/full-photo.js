@@ -30,21 +30,23 @@ const fillComment = (comment) => {
   fullPhotoCommentsList.append(fullPhotoCommentClone);
 };
 
+//Массив данных с сервера
+let photoDescriptions = [];
+const loadArrayData = (array) => photoDescriptions = array;
+
 //Cчетчик показываемых комментариев
 let displayedCommentCount = SHOWN_COMMENTS_COUNT;
-const onLoaderCommentsClick = (array) => {
-  fullPhotoCommentsLoader.addEventListener('click', () => {
-    //Найти текущее фото
-    const currenPhotoItem = array[fullPhotoImg.dataset.indexNumber];
-    //Взять следующие 5 комментариев из исходного массива
-    const nextSliceComments = currenPhotoItem.comments.slice(displayedCommentCount, displayedCommentCount + SHOWN_COMMENTS_COUNT);
-    nextSliceComments.forEach(fillComment);
-    fullPhotoCommentsCountCurrent.textContent = allFullPhotoComments.length;
-    if (allFullPhotoComments.length === currenPhotoItem.comments.length) {
-      fullPhotoCommentsLoader.classList.add('hidden');
-    }
-    displayedCommentCount += SHOWN_COMMENTS_COUNT;
-  });
+const onLoaderCommentsClick = () => {
+  //Найти текущее фото
+  const currenPhotoItem = photoDescriptions[fullPhotoImg.dataset.indexNumber];
+  //Взять следующие 5 комментариев из исходного массива
+  const nextSliceComments = currenPhotoItem.comments.slice(displayedCommentCount, displayedCommentCount + SHOWN_COMMENTS_COUNT);
+  nextSliceComments.forEach(fillComment);
+  fullPhotoCommentsCountCurrent.textContent = allFullPhotoComments.length;
+  if (allFullPhotoComments.length === currenPhotoItem.comments.length) {
+    fullPhotoCommentsLoader.classList.add('hidden');
+  }
+  displayedCommentCount += SHOWN_COMMENTS_COUNT;
 };
 
 
@@ -65,6 +67,7 @@ const openFullPhoto = (item, index) => {
   sliceComments.forEach(fillComment);
   fullPhotoCommentsCountCurrent.textContent = allFullPhotoComments.length;
   if (item.comments.length > SHOWN_COMMENTS_COUNT) {
+    fullPhotoCommentsLoader.addEventListener('click', onLoaderCommentsClick);
     fullPhotoCommentsLoader.classList.remove('hidden');
     fullPhotoCommentsCountBlock.classList.remove('hidden');
   } else if (item.comments.length === 0) {
@@ -82,6 +85,7 @@ const closeFullPhoto = () => {
   body.classList.remove('modal-open');
   body.style.marginRight = '';
   document.removeEventListener('keydown', onFullPhotoKeydown);
+  fullPhotoCommentsLoader.removeEventListener('click', onLoaderCommentsClick);
   //Сбросить счетчик показанных комментариев
   displayedCommentCount = SHOWN_COMMENTS_COUNT;
 };
@@ -107,6 +111,6 @@ fullPhotoButtonOverlay.addEventListener('click', (evt) => {
   }
 });
 
-export {openFullPhoto, onLoaderCommentsClick};
+export {openFullPhoto, loadArrayData};
 
 

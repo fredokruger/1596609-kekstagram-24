@@ -1,5 +1,5 @@
 import {ESCAPE_CODE, body} from './util.js';
-import {hashtagsInput, commentInput, onFormSubmit, commentLengthCurrent} from './form-validation.js';
+import {hashtagsInput, commentInput, commentLengthCurrent, onFormSubmit} from './form-validation.js';
 import {getScrollbarWidth} from './scrollbar-width.js';
 import {zoomInPhoto, zoomOutPhoto} from './scale-photo.js';
 
@@ -8,7 +8,6 @@ const photoUpload = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const closeEditingButton = document.querySelector('#upload-cancel');
 const imgUploadPreview = document.querySelector('.img-upload__preview img');
-const buttonFormSubmit = document.querySelector('.img-upload__submit');
 //Константы для фильтров
 const minPhoto = document.querySelectorAll('.effects__preview');
 const effectLevel = document.querySelector('.effect-level__value');
@@ -22,7 +21,6 @@ const closeEditingPhoto = () => {
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onImgEditingKeydown);
   closeEditingButton.removeEventListener('click', closeEditingPhoto);
-  buttonFormSubmit.removeEventListener('change', onFormSubmit);
   scaleControlSmaller.removeEventListener('click', zoomOutPhoto);
   scaleControlBigger.removeEventListener('click', zoomInPhoto);
   imgUploadPreview.style.transform = '';
@@ -34,6 +32,7 @@ const closeEditingPhoto = () => {
   hashtagsInput.classList.remove('text__hashtags--valid');
   commentInput.classList.remove('text__description--valid');
   body.style.marginRight = '';
+  imgUploadForm.removeEventListener('submit', onFormSubmit);
   imgUploadForm.reset();
 };
 
@@ -47,9 +46,9 @@ const openEditingPhoto = (evt) => {
   minPhoto.forEach((element) => {element.style.backgroundImage = `url(${userPhoto})`;});
   document.addEventListener('keydown', onImgEditingKeydown);
   closeEditingButton.addEventListener('click', closeEditingPhoto);
-  buttonFormSubmit.addEventListener('change', onFormSubmit);
   scaleControlSmaller.addEventListener('click', zoomOutPhoto);
   scaleControlBigger.addEventListener('click', zoomInPhoto);
+  imgUploadForm.addEventListener('submit', onFormSubmit);
 };
 
 photoUpload.addEventListener('change', openEditingPhoto);
@@ -63,4 +62,4 @@ function onImgEditingKeydown (evt) {
   closeEditingPhoto();
 }
 
-export {imgUploadPreview, effectLevel, effectLevelScale};
+export {imgUploadPreview, effectLevel, effectLevelScale, closeEditingPhoto};
