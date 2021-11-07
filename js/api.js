@@ -9,14 +9,14 @@ const getServerData = (onFail, ...onSuccess) => {
       if (response.ok) {
         return response.json();
       } else {
-        onFail();
+        onFail('Не удалось получить данные с сервера');
       }
     })
     .then((data) => {
       onSuccess.forEach((func) => func(data));
     })
     .catch(() => {
-      onFail();
+      onFail('Не удалось получить данные с сервера');
     });
 };
 

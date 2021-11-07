@@ -79,6 +79,7 @@ const openFullPhoto = (item, index) => {
 };
 //Функция закрытия большого фото
 const closeFullPhoto = () => {
+  fullPhotoImg.src = '';
   //Очистить созданные до этого комментарии
   fullPhotoCommentsList.innerHTML = '';
   fullPhotoContainer.classList.add('hidden');
