@@ -65,7 +65,7 @@ const setPreviewImage = (evt) => {
   if (matches) {
     body.append(photoLoaderModal);
     imgUploadPreview.src = userPhotoUrl;
-    minPhoto.forEach((element) => element.style.backgroundImage = `url(${userPhotoUrl})`);
+    minPhoto.forEach((element) => element.style.backgroundImage = `url(${imgUploadPreview.src})`);
   } else {
     showAlert('Неподдерживаемый формат изображения. Загрузите другое изображение');
   }

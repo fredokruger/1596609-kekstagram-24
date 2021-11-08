@@ -2,9 +2,13 @@ import {openFullPhoto} from './full-photo.js';
 
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const picturesContainer = document.querySelector('.pictures');
+const filtersBlock = document.querySelector('.img-filters');
 
 //Функция создания миниатюр из данных с сервера
 const createGallery = (array) => {
+  //Найти и удалить все миниатюры
+  const pictures = document.querySelectorAll('.picture');
+  pictures.forEach((picture) => picture.remove());
   array.forEach((item, index) => {
     const copyPictureTemplate = pictureTemplate.cloneNode(true);
     copyPictureTemplate.querySelector('.picture__img').src = item.url;
@@ -13,6 +17,7 @@ const createGallery = (array) => {
     copyPictureTemplate.querySelector('.picture__comments').textContent = item.comments.length;
     picturesContainer.append(copyPictureTemplate);
   });
+  filtersBlock.classList.remove('img-filters--inactive');
 };
 
 //Привязка события к миниатюрам при помощи делегирования
