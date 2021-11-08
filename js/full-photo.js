@@ -1,6 +1,5 @@
 import {ESCAPE_CODE, body} from './util.js';
 import {getScrollbarWidth} from './scrollbar-width.js';
-import {photoDescriptions} from './descriptions-list.js';
 
 //Элементы попапа с большим фото
 const fullPhotoContainer = document.querySelector('.big-picture');
@@ -15,9 +14,8 @@ const fullPhotoCommentsList = fullPhotoContainer.querySelector('.social__comment
 
 //Шаблон комментария
 const fullPhotoCommentsItemTemplate = fullPhotoCommentsList.querySelector('#social__comment').content.querySelector('.social__comment');
-//Живая коллекция фото
+//Живая коллекция комментариев
 const allFullPhotoComments = fullPhotoCommentsList.getElementsByClassName('social__comment');
-//Скрытые комментарии к фото
 const fullPhotoButtonClose = document.querySelector('.big-picture__cancel');
 const fullPhotoButtonOverlay = document.querySelector('.overlay');
 //Количество показываемых комментариев
@@ -32,9 +30,13 @@ const fillComment = (comment) => {
   fullPhotoCommentsList.append(fullPhotoCommentClone);
 };
 
+//Массив данных с сервера
+let photoDescriptions = [];
+const loadArrayData = (array) => photoDescriptions = array;
+
 //Cчетчик показываемых комментариев
 let displayedCommentCount = SHOWN_COMMENTS_COUNT;
-function onLoaderCommentsClick ()  {
+const onLoaderCommentsClick = () => {
   //Найти текущее фото
   const currenPhotoItem = photoDescriptions[fullPhotoImg.dataset.indexNumber];
   //Взять следующие 5 комментариев из исходного массива
@@ -45,7 +47,8 @@ function onLoaderCommentsClick ()  {
     fullPhotoCommentsLoader.classList.add('hidden');
   }
   displayedCommentCount += SHOWN_COMMENTS_COUNT;
-}
+};
+
 
 //Функция открытия большого фото, в аргументы будут переданы текущий элемент массива и его индекс
 const openFullPhoto = (item, index) => {
@@ -64,9 +67,9 @@ const openFullPhoto = (item, index) => {
   sliceComments.forEach(fillComment);
   fullPhotoCommentsCountCurrent.textContent = allFullPhotoComments.length;
   if (item.comments.length > SHOWN_COMMENTS_COUNT) {
+    fullPhotoCommentsLoader.addEventListener('click', onLoaderCommentsClick);
     fullPhotoCommentsLoader.classList.remove('hidden');
     fullPhotoCommentsCountBlock.classList.remove('hidden');
-    fullPhotoCommentsLoader.addEventListener('click', onLoaderCommentsClick);
   } else if (item.comments.length === 0) {
     fullPhotoCommentsCountBlock.classList.add('hidden');
     fullPhotoCommentsLoader.classList.add('hidden');
@@ -76,12 +79,15 @@ const openFullPhoto = (item, index) => {
 };
 //Функция закрытия большого фото
 const closeFullPhoto = () => {
-  fullPhotoCommentsList.innerHTML = ''; //очистить созданные до этого комментарии
+  fullPhotoImg.src = '';
+  //Очистить созданные до этого комментарии
+  fullPhotoCommentsList.innerHTML = '';
   fullPhotoContainer.classList.add('hidden');
   body.classList.remove('modal-open');
   body.style.marginRight = '';
   document.removeEventListener('keydown', onFullPhotoKeydown);
   fullPhotoCommentsLoader.removeEventListener('click', onLoaderCommentsClick);
+  //Сбросить счетчик показанных комментариев
   displayedCommentCount = SHOWN_COMMENTS_COUNT;
 };
 
@@ -106,6 +112,6 @@ fullPhotoButtonOverlay.addEventListener('click', (evt) => {
   }
 });
 
-export {openFullPhoto};
+export {openFullPhoto, loadArrayData};
 
 

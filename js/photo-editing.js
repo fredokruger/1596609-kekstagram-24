@@ -1,5 +1,5 @@
-import {ESCAPE_CODE, body} from './util.js';
-import {hashtagsInput, commentInput, onFormSubmit, commentLengthCurrent} from './form-validation.js';
+import {ESCAPE_CODE, body, FILE_TYPES, showAlert} from './util.js';
+import {hashtagsInput, commentInput, commentLengthCurrent, onFormSubmit} from './form-validation.js';
 import {getScrollbarWidth} from './scrollbar-width.js';
 import {zoomInPhoto, zoomOutPhoto} from './scale-photo.js';
 
@@ -8,7 +8,7 @@ const photoUpload = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const closeEditingButton = document.querySelector('#upload-cancel');
 const imgUploadPreview = document.querySelector('.img-upload__preview img');
-const buttonFormSubmit = document.querySelector('.img-upload__submit');
+const photoLoaderModal = document.querySelector('#messages').content.querySelector('.img-upload__message');
 //Константы для фильтров
 const minPhoto = document.querySelectorAll('.effects__preview');
 const effectLevel = document.querySelector('.effect-level__value');
@@ -22,37 +22,56 @@ const closeEditingPhoto = () => {
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onImgEditingKeydown);
   closeEditingButton.removeEventListener('click', closeEditingPhoto);
-  buttonFormSubmit.removeEventListener('change', onFormSubmit);
   scaleControlSmaller.removeEventListener('click', zoomOutPhoto);
   scaleControlBigger.removeEventListener('click', zoomInPhoto);
   imgUploadPreview.style.transform = '';
   imgUploadPreview.className = '';
   imgUploadPreview.style.filter = '';
+  imgUploadPreview.src = '';
+  minPhoto.forEach((element) => element.style.backgroundImage = '');
   commentLengthCurrent.textContent = 0;
   hashtagsInput.setCustomValidity('');
   hashtagsInput.classList.remove('text__hashtags--invalid');
   hashtagsInput.classList.remove('text__hashtags--valid');
   commentInput.classList.remove('text__description--valid');
   body.style.marginRight = '';
+  imgUploadForm.removeEventListener('submit', onFormSubmit);
   imgUploadForm.reset();
 };
 
-const openEditingPhoto = (evt) => {
-  const userPhoto = URL.createObjectURL(evt.target.files[0]);
+const openEditingPhoto = () => {
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   body.style.marginRight = `${getScrollbarWidth()}px`;
-  imgUploadPreview.src = userPhoto;
   effectLevelScale.style.display = 'none';
-  minPhoto.forEach((element) => {element.style.backgroundImage = `url(${userPhoto})`;});
   document.addEventListener('keydown', onImgEditingKeydown);
   closeEditingButton.addEventListener('click', closeEditingPhoto);
-  buttonFormSubmit.addEventListener('change', onFormSubmit);
   scaleControlSmaller.addEventListener('click', zoomOutPhoto);
   scaleControlBigger.addEventListener('click', zoomInPhoto);
+  imgUploadForm.addEventListener('submit', onFormSubmit);
 };
 
-photoUpload.addEventListener('change', openEditingPhoto);
+
+const setPreviewImage = (evt) => {
+  const userPhoto = evt.target.files[0];
+  const userPhotoUrl = URL.createObjectURL(userPhoto);
+  const userPhotoName = userPhoto.name.toLowerCase();
+  const matches = FILE_TYPES.some((item) => userPhotoName.endsWith(item));
+  imgUploadPreview.addEventListener('load', () => {
+    photoLoaderModal.remove();
+    openEditingPhoto(),
+    { once: true };
+  });
+  if (matches) {
+    body.append(photoLoaderModal);
+    imgUploadPreview.src = userPhotoUrl;
+    minPhoto.forEach((element) => element.style.backgroundImage = `url(${imgUploadPreview.src})`);
+  } else {
+    showAlert('Неподдерживаемый формат изображения. Загрузите другое изображение');
+  }
+};
+
+photoUpload.addEventListener('change', setPreviewImage);
 
 function onImgEditingKeydown (evt) {
   //Отменить закрытие попапа, если фокус на полях ввода или клавиша не escape
@@ -63,4 +82,4 @@ function onImgEditingKeydown (evt) {
   closeEditingPhoto();
 }
 
-export {imgUploadPreview, effectLevel, effectLevelScale};
+export {imgUploadPreview, effectLevel, effectLevelScale, closeEditingPhoto};

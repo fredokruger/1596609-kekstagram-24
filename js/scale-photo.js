@@ -1,4 +1,4 @@
-import {imgUploadPreview} from './popup-editing.js';
+import {imgUploadPreview} from './photo-editing.js';
 
 const scaleControlValue = document.querySelector('.scale__control--value');
 const SCALE_STEP = 0.25;

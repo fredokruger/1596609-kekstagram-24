@@ -150,12 +150,16 @@ main {
   border: none;
 }
 
-.img-filters__button:active,
 .img-filters__button--active {
   color: #ff4e4e;
 
   background-color: #ffffff;
   border-radius: 2px;
+}
+
+.img-filters__button:active {
+  color: #ff4e4e;
+  background-color: #E6EBEB;
 }
 
 .img-filters__label {
@@ -1375,6 +1379,17 @@ main {
           transform: translateX(-50%);
 }
 
+.alert {
+  z-index: 100;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  padding: 10px 3px;
+  font-size: 20px;
+  text-align: center;
+  background-color: red;
+}
 
 /* Адаптивности чуток
    ========================================================================== */
