@@ -1,7 +1,5 @@
-// import {imgUploadPreview, effectLevel, effectLevelScale} from './photo-editing.js';
-const imgUploadPreview = document.querySelector('.img-upload__preview img');
-const effectLevel = document.querySelector('.effect-level__value');
-const effectLevelScale = document.querySelector('.effect-level');
+import {imgUploadPreview, effectLevel, effectLevelScale} from './photo-editing.js';
+
 const filterRadioButtons = document.querySelector('.effects__list');
 const rangeSlider = document.querySelector('.effect-level__slider');
 
