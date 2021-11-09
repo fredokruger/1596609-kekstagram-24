@@ -15,7 +15,7 @@ const showRandomPhotos = (copyArray) => {
 };
 
 const showDiscussedPhotos = (copyArray) => {
-  copyArray.sort((commentA, commentB) => commentB.comments.length - commentA.comments.length);
+  copyArray.sort((photoA, photoB) => photoB.comments.length - photoA.comments.length);
   return copyArray;
 };
 
