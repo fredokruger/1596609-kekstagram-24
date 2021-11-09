@@ -31,14 +31,14 @@ const fillComment = (comment) => {
 };
 
 //Массив данных с сервера
-let photoDescriptions = [];
-const loadArrayData = (array) => photoDescriptions = array;
+let photosDescription = [];
+const loadArrayData = (array) => photosDescription = array;
 
 //Cчетчик показываемых комментариев
 let displayedCommentCount = SHOWN_COMMENTS_COUNT;
 const onLoaderCommentsClick = () => {
   //Найти текущее фото
-  const currenPhotoItem = photoDescriptions[fullPhotoImg.dataset.indexNumber];
+  const currenPhotoItem = photosDescription[fullPhotoImg.dataset.indexNumber];
   //Взять следующие 5 комментариев из исходного массива
   const nextSliceComments = currenPhotoItem.comments.slice(displayedCommentCount, displayedCommentCount + SHOWN_COMMENTS_COUNT);
   nextSliceComments.forEach(fillComment);

@@ -4,7 +4,6 @@ const scaleControlValue = document.querySelector('.scale__control--value');
 const SCALE_STEP = 0.25;
 const SCALE_MIN = 0.25;
 const SCALE_MAX = 1;
-// const re = /(\d+\.\d+)|(\d+)/;
 
 const zoomOutPhoto = () => {
   const scaleValue = +scaleControlValue.value.replace(/[^0-9]/g, '') / 100;
