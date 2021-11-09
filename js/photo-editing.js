@@ -16,7 +16,6 @@ const effectLevelScale = document.querySelector('.effect-level');
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
 
-
 const closeEditingPhoto = () => {
   imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
