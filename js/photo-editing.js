@@ -29,7 +29,7 @@ const closeEditingPhoto = () => {
   imgUploadPreview.style.filter = '';
   imgUploadPreview.src = '';
   minPhoto.forEach((element) => element.style.backgroundImage = '');
-  commentLengthCurrent.textContent = 0;
+  commentLengthCurrent.textContent = '0';
   hashtagsInput.setCustomValidity('');
   hashtagsInput.classList.remove('text__hashtags--invalid');
   hashtagsInput.classList.remove('text__hashtags--valid');
