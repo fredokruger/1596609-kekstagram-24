@@ -28,7 +28,7 @@ const createMiniatureEvent = (array) => {
       //Дата атрибут текущей фотографии
       const currentPhotoDataId = evt.target.closest('.picture').querySelector('.picture__img').dataset.indexNumber;
       //вызов функции открытия большого фото с аргументами в виде элемента из исходного массива и индекса этого элемента
-      openFullPhoto(array[currentPhotoDataId], currentPhotoDataId);
+      openFullPhoto(array[currentPhotoDataId]);
     }
   });
 };
