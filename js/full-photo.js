@@ -77,6 +77,7 @@ const openFullPhoto = (item) => {
     fullPhotoCommentsLoader.classList.add('hidden');
   }
 };
+
 //Функция закрытия большого фото
 const closeFullPhoto = () => {
   fullPhotoImg.src = '';
