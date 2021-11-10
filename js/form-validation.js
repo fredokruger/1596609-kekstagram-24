@@ -2,10 +2,10 @@ import {sendServerData} from './api.js';
 import {closeEditingPhoto} from './photo-editing.js';
 import {ESCAPE_CODE, body} from './util.js';
 
-const successSendBlock = document.querySelector('#success').content.querySelector('.success');
-const errorSendBlock = document.querySelector('#error').content.querySelector('.error');
-const successButton = successSendBlock.querySelector('.success__button');
-const errorButton = errorSendBlock.querySelector('.error__button');
+const successSendContainer = document.querySelector('#success').content.querySelector('.success');
+const errorSendContainer = document.querySelector('#error').content.querySelector('.error');
+const successButton = successSendContainer.querySelector('.success__button');
+const errorButton = errorSendContainer.querySelector('.error__button');
 const hashtagsInput = document.querySelector('.text__hashtags');
 const commentInput = document.querySelector('.text__description');
 const HASHTAG_LENGTH = 20;
@@ -76,9 +76,9 @@ hashtagsInput.addEventListener('input', () => {
 });
 
 //Валидация поля комментария
-commentLengthMax.textContent = MAX_COMMENT_LENGTH;
+commentLengthMax.textContent = `${MAX_COMMENT_LENGTH}`;
 commentInput.addEventListener('input', () => {
-  commentLengthCurrent.textContent = commentInput.value.length;
+  commentLengthCurrent.textContent = `${commentInput.value.length}`;
   if (commentInput.value === '') {
     commentInput.classList.remove('text__description--valid');
   } else {
@@ -91,7 +91,7 @@ const onErrorMessageEvent = (evt) => {
   if (evt.key !== ESCAPE_CODE && evt.target !== errorButton && evt.target.matches('.error__inner')) {
     return;
   }
-  errorSendBlock.remove();
+  errorSendContainer.remove();
   errorButton.removeEventListener('click', onErrorMessageEvent);
   document.removeEventListener('keydown', onErrorMessageEvent);
 };
@@ -101,21 +101,21 @@ const onSuccessMessageEvent = (evt) => {
   if (evt.key !== ESCAPE_CODE && evt.target !== successButton && evt.target.matches('.success__inner')) {
     return;
   }
-  successSendBlock.remove();
-  successSendBlock.removeEventListener('click', onSuccessMessageEvent);
+  successSendContainer.remove();
+  successSendContainer.removeEventListener('click', onSuccessMessageEvent);
   document.removeEventListener('keydown', onSuccessMessageEvent);
 };
 
 //Функция открытия окна ошибки отправки фото
 const openErrorMessage = () => {
-  body.append(errorSendBlock);
+  body.append(errorSendContainer);
   errorButton.addEventListener('click', onErrorMessageEvent);
   document.addEventListener('keydown', onErrorMessageEvent);
 };
 //Функция открытия окна успешной отправки фото
 const openSuccessMessage = () => {
-  body.append(successSendBlock);
-  successSendBlock.addEventListener('click', onSuccessMessageEvent);
+  body.append(successSendContainer);
+  successSendContainer.addEventListener('click', onSuccessMessageEvent);
   document.addEventListener('keydown', onSuccessMessageEvent);
 };
 
