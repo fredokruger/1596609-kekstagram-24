@@ -1,4 +1,4 @@
-import {chooseRandomNumber, debounce} from './util.js';
+import {chooseRandomNumber, createDebounce} from './util.js';
 import {createGallery} from './miniature-photo.js';
 
 const imgFiltersForm = document.querySelector('.img-filters__form');
@@ -21,8 +21,8 @@ const showDiscussedPhotos = (copyArray) => {
 
 
 const shufflePhotos = (array) => {
-  let shuffleArray = [];
-  const delayRendering = debounce(createGallery, DELAY_TIME);
+  let mixedElements = [];
+  const delayRendering = createDebounce(createGallery, DELAY_TIME);
   imgFiltersForm.addEventListener('click', (evt) => {
     evt.preventDefault();
     //Удалить активный класс у кнопок
@@ -31,18 +31,18 @@ const shufflePhotos = (array) => {
     const copyArray = array.slice();
     //Создать переменную для преобразованного массива
     if (evt.target.matches('#filter-default')) {
-      shuffleArray = array;
+      mixedElements = array;
       evt.target.classList.add('img-filters__button--active');
     }
     if (evt.target.matches('#filter-random')) {
-      shuffleArray = showRandomPhotos(copyArray);
+      mixedElements = showRandomPhotos(copyArray);
       evt.target.classList.add('img-filters__button--active');
     }
     if (evt.target.matches('#filter-discussed')) {
-      shuffleArray = showDiscussedPhotos(copyArray);
+      mixedElements = showDiscussedPhotos(copyArray);
       evt.target.classList.add('img-filters__button--active');
     }
-    delayRendering(shuffleArray);
+    delayRendering(mixedElements);
   });
 };
 
